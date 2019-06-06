@@ -51,8 +51,15 @@ Describe "Compare Worksheet" {
     Context "Setting the background to highlight different rows, use of grid view." {
         BeforeAll {
             $useGrid =  ($PSVersionTable.PSVersion.Major -LE 5)
-            $null = Compare-WorkSheet "$env:temp\Server1.xlsx" "$env:temp\Server2.xlsx" -BackgroundColor ([System.Drawing.Color]::LightGreen) -GridView:$useGrid
-            if ($useGrid) {Start-Sleep -sec 5; [System.Windows.Forms.SendKeys]::Sendwait("%{F4}") }
+            if ($useGrid) {
+                $ModulePath = (Get-Command -Name 'Compare-WorkSheet').Module.Path
+                $PowerShellExec = if ($PSEdition -eq 'Core') {'pwsh.exe'} else {'powershell.exe'}
+                $PowerShellPath = Join-Path -Path $PSHOME -ChildPath $PowerShellExec
+                . $PowerShellPath -Command ("Import-Module $ModulePath; " + '$null = Compare-WorkSheet "$env:temp\Server1.xlsx" "$env:temp\Server2.xlsx" -BackgroundColor ([System.Drawing.Color]::LightGreen) -GridView; Start-Sleep -sec 5')
+            }
+            else {
+                $null = Compare-WorkSheet "$env:temp\Server1.xlsx" "$env:temp\Server2.xlsx" -BackgroundColor ([System.Drawing.Color]::LightGreen) -GridView:$useGrid
+            }
             $xl1  = Open-ExcelPackage -Path "$env:temp\Server1.xlsx"
             $xl2  = Open-ExcelPackage -Path "$env:temp\Server2.xlsx"
             $s1Sheet = $xl1.Workbook.Worksheets[1]
@@ -107,7 +114,7 @@ Describe "Compare Worksheet" {
 
     Context "More complex comparison: output check and different worksheet names " {
         BeforeAll {
-            [System.Collections.ArrayList]$s = get-service | Select-Object -first 25 -Property RequiredServices, CanPauseAndContinue, CanShutdown, CanStop, 
+            [System.Collections.ArrayList]$s = get-service | Select-Object -first 25 -Property RequiredServices, CanPauseAndContinue, CanShutdown, CanStop,
             DisplayName, DependentServices, MachineName, ServiceName, ServicesDependedOn, ServiceHandle, Status, ServiceType, StartType  -ExcludeProperty Name
             $s | Export-Excel -Path $env:temp\server1.xlsx  -WorkSheetname Server1
             #$s is a zero based array, excel rows are 1 based and excel has a header row so Excel rows will be 2 + index in $s
@@ -321,7 +328,7 @@ Describe "Merge Multiple sheets" {
             $ws.Cells[12,9 ].Value                                        | Should     be $ws.Cells[12,5].Value
             $ws.Cells[12,10].Value                                        | Should     be $ws.Cells[12,6].Value
         }
-        it "Creared Conditional formatting rules                                                   " {
+        it "Created Conditional formatting rules                                                   " {
             $cf=$ws.ConditionalFormatting
             $cf.Count                                                     | Should     be 17
             $cf[16].Address.Address                                       | Should     be 'B2:B1048576'

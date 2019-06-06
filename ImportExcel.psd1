@@ -4,7 +4,7 @@
     RootModule        = 'ImportExcel.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '5.4.5'
+    ModuleVersion     = '6.1.0'
 
     # ID used to uniquely identify this module
     GUID              = '60dd4136-feff-401a-ba27-a84458c57ede'
@@ -61,16 +61,84 @@ Check out the How To Videos https://www.youtube.com/watch?v=U3Ne_yX4tYo&list=PL5
     # NestedModules = @()
 
     # Functions to export from this module
-    FunctionsToExport = '*'
+    FunctionsToExport = @(
+        'Add-ConditionalFormatting',
+        'Add-ExcelChart',
+        'Add-ExcelDataValidationRule',
+        'Add-ExcelName',
+        'Add-ExcelTable',
+        'Add-PivotTable',
+        'Add-WorkSheet',
+        'BarChart',
+        'Close-ExcelPackage',
+        'ColumnChart',
+        'Compare-WorkSheet',
+        'Convert-XlRangeToImage',
+        'ConvertFrom-ExcelData',
+        'ConvertFrom-ExcelSheet',
+        'ConvertFrom-ExcelToSQLInsert',
+        'ConvertTo-ExcelXlsx',
+        'Copy-ExcelWorkSheet',
+        'DoChart',
+        'Expand-NumberFormat',
+        'Export-Excel',
+        'Export-ExcelSheet',
+        'Export-MultipleExcelSheets',
+        'Get-ExcelColumnName',
+        'Get-ExcelSheetInfo',
+        'Get-ExcelWorkbookInfo',
+        'Get-HtmlTable',
+        'Get-Range',
+        'Get-XYRange',
+        'Import-Excel',
+        'Import-Html',
+        'Import-UPS',
+        'Import-USPS',
+        'Invoke-AllTests',
+        'Invoke-Sum',
+        'Join-Worksheet',
+        'LineChart',
+        'Merge-MultipleSheets',
+        'Merge-Worksheet',
+        'New-ConditionalFormattingIconSet',
+        'New-ConditionalText',
+        'New-ExcelChartDefinition',
+        'New-PivotTableDefinition',
+        'New-Plot',
+        'New-PSItem',
+        'NumberFormatCompletion',
+        'Open-ExcelPackage',
+        'PieChart',
+        'Pivot',
+        'Remove-WorkSheet'
+        'Select-Worksheet',
+        'Send-SQLDataToExcel',
+        'Set-CellStyle',
+        'Set-ExcelColumn',
+        'Set-ExcelRange',
+        'Set-ExcelRow',
+        'Test-Boolean',
+        'Test-Date',
+        'Test-Integer',
+        'Test-Number',
+        'Test-String',
+        'Update-FirstObjectProperties'
+    )
 
     # Cmdlets to export from this module
-    CmdletsToExport   = '*'
+    #CmdletsToExport   = '*'
 
     # Variables to export from this module
-    VariablesToExport = '*'
+    #VariablesToExport = '*'
 
     # Aliases to export from this module
-    AliasesToExport   = '*'
+    AliasesToExport   = @(
+        'New-ExcelChart',
+        'Set-Column',
+        'Set-Format',
+        'Set-Row',
+        'Use-ExcelData'
+    )
 
     # List of all modules packaged with this module
     # ModuleList = @()

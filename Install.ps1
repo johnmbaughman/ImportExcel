@@ -1,5 +1,5 @@
-<# 
-    .SYNOPSIS   
+<#
+    .SYNOPSIS
         Download the module files from GitHub.
 
     .DESCRIPTION
@@ -85,12 +85,12 @@ Process {
         }
 
         if (-not (Test-Path $InstallDirectory)) {
-            New-Item -Path $InstallDirectory -ItemType Directory -EA Stop | Out-Null
+            $null = New-Item -Path $InstallDirectory -ItemType Directory -EA Stop
             Write-Verbose "$ModuleName created module folder '$InstallDirectory'"
         }
 
         $WebClient = New-Object System.Net.WebClient
-        
+
         $Files | ForEach-Object {
             $WebClient.DownloadFile("$GitPath/$_","$installDirectory\$_")
             Write-Verbose "$ModuleName installed module file '$_'"
